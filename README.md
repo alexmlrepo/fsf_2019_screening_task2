@@ -37,8 +37,8 @@ PS. It's all your choice How you want to use it.
 
 [![INSERT YOUR GRAPHIC HERE](https://github.com/sachin3339/fsf_2019_screening_task2/blob/master/Screenshots/Plotter.png?raw=true)]()
 
-- Tick the coloumns against which you have to plot the graph
-- Press Show to plot it.
+- Tick the columns against which you have to plot the graph
+- Click Show to plot it.
 - Various tools below to Manipulate graph(Save,Magnify..etc..)
 
 > Setting Options*
