@@ -2,7 +2,7 @@
 
 # fsf_2019_screening_task2
 
-> Keeping in mind that a user needs a maximum screen size for specific purpose like CSV file editing and Plotting the graph ,I have made two seperate files which are capable of running independent.   
+> Keeping in mind that a user needs a maximum screen size for specific purpose like CSV file editing and Plotting the graph I have made two seperate files which are capable of running independent.   
 
 >CSV Manipulator.py ===> Editing,Saving,Loading Spreadsheet.
 
