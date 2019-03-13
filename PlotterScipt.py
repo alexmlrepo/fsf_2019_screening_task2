@@ -4,27 +4,34 @@ Created on Wed Mar 13 00:33:32 2019
 
 @author: fearlesssachin
 """
-
 import sys, os, csv
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
 
 import matplotlib
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
+
 class Form(QMainWindow):
-     def __init__(self, parent=None):
+    def __init__(self, parent=None):
         super(Form, self).__init__(parent)
         self.setWindowTitle('CSV Data plotting')
+
+        self.data = DataHolder()
+        self.series_list_model = QStandardItemModel()
+
         self.create_menu()
         self.create_main_frame()
         self.create_status_bar()
+
         self.update_ui()
-        
-     def load_file(self, filename=None):
+        self.on_show()
+
+    def load_file(self, filename=None):
         filename, filters = QFileDialog.getOpenFileName(self,
             'Open a data file', '.', 'CSV files (*.csv);;All Files (*.*)')
 
@@ -32,8 +39,8 @@ class Form(QMainWindow):
             self.data.load_from_file(filename)
             self.fill_series_list(self.data.series_names())
             self.status_text.setText("Loaded " + filename)
-            self.update_ui()   
-            
+            self.update_ui()
+
     def update_ui(self):
         if self.data.series_count() > 0 and self.data.series_len() > 0:
             self.from_spin.setValue(0)
@@ -45,6 +52,7 @@ class Form(QMainWindow):
         else:
             for w in [self.from_spin, self.to_spin]:
                 w.setEnabled(False)
+
     def on_show(self):
         self.axes.clear()
         self.axes.grid(True)
@@ -67,15 +75,22 @@ class Form(QMainWindow):
 
         if has_series and self.legend_cb.isChecked():
             self.axes.legend()
-     def fill_series_list(self, names):
+        self.canvas.draw()
+
+    def on_about(self):
+        msg = __doc__
+        QMessageBox.about(self, "About the Created Applcation", msg.strip())
+
+    def fill_series_list(self, names):
         self.series_list_model.clear()
 
         for name in names:
             item = QStandardItem(name)
             item.setCheckState(Qt.Unchecked)
             item.setCheckable(True)
-            self.series_list_model.appendRow(item)   
-     def create_main_frame(self):
+            self.series_list_model.appendRow(item)
+
+    def create_main_frame(self):
         self.main_frame = QWidget()
 
         plot_frame = QWidget()
@@ -129,29 +144,30 @@ class Form(QMainWindow):
         self.main_frame.setLayout(hbox)
 
         self.setCentralWidget(self.main_frame)
-   
-     
-     def create_menu(self):
+
+    def create_status_bar(self):
+        self.status_text = QLabel("Please load a data file")
+        self.statusBar().addWidget(self.status_text, 1)
+
+    def create_menu(self):
         self.file_menu = self.menuBar().addMenu("&File")
+
         load_action = self.create_action("&Load file",
-        shortcut="Ctrl+L", slot=self.load_file, tip="Load a file")
+            shortcut="Ctrl+L", slot=self.load_file, tip="Load a file")
         quit_action = self.create_action("&Quit", slot=self.close,
-        shortcut="Ctrl+Q", tip="Close the application")
-    
+            shortcut="Ctrl+Q", tip="Close the application")
+
         self.add_actions(self.file_menu,
-        (load_action, None, quit_action))
-    
+            (load_action, None, quit_action))
+
         self.help_menu = self.menuBar().addMenu("&Help")
         about_action = self.create_action("&About",
-        shortcut='F1', slot=self.on_about,
-        tip='About the demo')
-    
+            shortcut='F1', slot=self.on_about,
+            tip='About the demo')
+
         self.add_actions(self.help_menu, (about_action,))
-        
-     def create_status_bar(self):
-        self.status_text = QLabel("Please load a data file")
-        self.statusBar().addWidget(self.status_text, 1)   
-     def add_actions(self, target, actions):
+
+    def add_actions(self, target, actions):
         for action in actions:
             if action is None:
                 target.addSeparator()
@@ -174,7 +190,9 @@ class Form(QMainWindow):
             getattr(action, signal).connect(slot)
         if checkable:
             action.setCheckable(True)
-        return action   
+        return action
+
+
 class DataHolder(object):
     def __init__(self, filename=None):
         self.load_from_file(filename)
@@ -205,7 +223,9 @@ class DataHolder(object):
 
     def get_series_data(self, name):
         return self.data[name]
-        
+
+
+
 def main():
     app = QApplication(sys.argv)
     form = Form()
@@ -215,6 +235,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-            
-            
+
+
