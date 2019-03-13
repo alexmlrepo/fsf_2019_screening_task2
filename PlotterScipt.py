@@ -21,6 +21,7 @@ class Form(QMainWindow):
         self.setWindowTitle('CSV Data plotting')
         self.create_menu()
         self.create_main_frame()
+        self.create_status_bar()
         
      def create_main_frame(self):
         self.main_frame = QWidget()
@@ -95,6 +96,9 @@ class Form(QMainWindow):
     
         self.add_actions(self.help_menu, (about_action,))
         
+     def create_status_bar(self):
+        self.status_text = QLabel("Please load a data file")
+        self.statusBar().addWidget(self.status_text, 1)   
         
 def main():
     app = QApplication(sys.argv)
