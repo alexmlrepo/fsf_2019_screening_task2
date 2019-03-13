@@ -81,7 +81,7 @@ class Sheet(QMainWindow):
         save_action = QAction('&Save', self)
         save_action.setShortcut('Ctrl+S')
 
-        open_action = QAction('&Open', self)
+        open_action = QAction('&Load', self)
 
         quit_action = QAction('&Quit', self)
 
