@@ -2,9 +2,9 @@
 
 # fsf_2019_screening_task2
 
-> Keeping in mind that a user needs a maximum screen size for specific purpose like CSV file editing and Plotting the graph ,I have made two seperate files which are capable of running indendent.   
+> Keeping in mind that a user needs a maximum screen size for specific purpose like CSV file editing and Plotting the graph ,I have made two seperate files which are capable of running independent.   
 
->CsV Manipulator.py ===> Editing,Saving,Loading Spreadsheet.
+>CSV Manipulator.py ===> Editing,Saving,Loading Spreadsheet.
 
 >PlotterScipt.py===>For plotting by loading file(You can Manipulate Graph too).
 
@@ -30,7 +30,7 @@ PS. It's all your choice How you want to use it.
 
 [![INSERT YOUR GRAPHIC HERE](https://github.com/sachin3339/fsf_2019_screening_task2/blob/master/Screenshots/Spreadsheet.png?raw=true)]()
 
-- Plotter button is provide to open Plotter window.
+- Plotter button is provided to open Plotter window.
 - You can Load,Write,Save here.
 
 > Plotter View *
