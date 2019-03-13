@@ -124,6 +124,30 @@ class Form(QMainWindow):
      def create_status_bar(self):
         self.status_text = QLabel("Please load a data file")
         self.statusBar().addWidget(self.status_text, 1)   
+     def add_actions(self, target, actions):
+        for action in actions:
+            if action is None:
+                target.addSeparator()
+            else:
+                target.addAction(action)
+
+    def create_action(  self, text, slot=None, shortcut=None,
+                        icon=None, tip=None, checkable=False,
+                        signal="triggered"):
+        action = QAction(text, self)
+        if icon is not None:
+            action.setIcon(QIcon(":/%s.png" % icon))
+        if shortcut is not None:
+            action.setShortcut(shortcut)
+        if tip is not None:
+            action.setToolTip(tip)
+            action.setStatusTip(tip)
+        if slot is not None:
+            # self.connect(action, SIGNAL(signal), slot)
+            getattr(action, signal).connect(slot)
+        if checkable:
+            action.setCheckable(True)
+        return action   
         
 def main():
     app = QApplication(sys.argv)
