@@ -45,8 +45,28 @@ class Form(QMainWindow):
         else:
             for w in [self.from_spin, self.to_spin]:
                 w.setEnabled(False)
-        
-      
+    def on_show(self):
+        self.axes.clear()
+        self.axes.grid(True)
+
+        has_series = False
+
+        for row in range(self.series_list_model.rowCount()):
+            model_index = self.series_list_model.index(row, 0)
+            checked = self.series_list_model.data(model_index,
+                Qt.CheckStateRole) == QVariant(Qt.Checked)
+            name = str(self.series_list_model.data(model_index))
+
+            if checked:
+                has_series = True
+
+                x_from = self.from_spin.value()
+                x_to = self.to_spin.value()
+                series = self.data.get_series_data(name)[x_from:x_to + 1]
+                self.axes.plot(range(len(series)), series, 'o-', label=name)
+
+        if has_series and self.legend_cb.isChecked():
+            self.axes.legend()
      def fill_series_list(self, names):
         self.series_list_model.clear()
 
