@@ -148,6 +148,36 @@ class Form(QMainWindow):
         if checkable:
             action.setCheckable(True)
         return action   
+class DataHolder(object):
+    def __init__(self, filename=None):
+        self.load_from_file(filename)
+
+    def load_from_file(self, filename=None):
+        self.data = {}
+        self.names = []
+
+        if filename:
+            with open(filename, 'r') as f:
+                for line in csv.reader(f):
+                    self.names.append(line[0])
+                    self.data[line[0]] = [i for i in map(int, line[1:])]
+                    self.datalen = len(line[1:])
+
+    def series_names(self):
+        """ Names of the data series
+        """
+        return self.names
+
+    def series_len(self):
+        """ Length of a data series
+        """
+        return self.datalen
+
+    def series_count(self):
+        return len(self.data)
+
+    def get_series_data(self, name):
+        return self.data[name]
         
 def main():
     app = QApplication(sys.argv)
