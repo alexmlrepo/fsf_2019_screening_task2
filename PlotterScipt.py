@@ -22,6 +22,31 @@ class Form(QMainWindow):
         self.create_menu()
         self.create_main_frame()
         self.create_status_bar()
+        self.update_ui()
+        
+     def load_file(self, filename=None):
+        filename, filters = QFileDialog.getOpenFileName(self,
+            'Open a data file', '.', 'CSV files (*.csv);;All Files (*.*)')
+
+        if filename:
+            self.data.load_from_file(filename)
+            self.fill_series_list(self.data.series_names())
+            self.status_text.setText("Loaded " + filename)
+            self.update_ui()   
+            
+    def update_ui(self):
+        if self.data.series_count() > 0 and self.data.series_len() > 0:
+            self.from_spin.setValue(0)
+            self.to_spin.setValue(self.data.series_len() - 1)
+
+            for w in [self.from_spin, self.to_spin]:
+                w.setRange(0, self.data.series_len() - 1)
+                w.setEnabled(True)
+        else:
+            for w in [self.from_spin, self.to_spin]:
+                w.setEnabled(False)
+        
+      
         
      def create_main_frame(self):
         self.main_frame = QWidget()
