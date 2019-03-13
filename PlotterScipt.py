@@ -47,7 +47,14 @@ class Form(QMainWindow):
                 w.setEnabled(False)
         
       
-        
+     def fill_series_list(self, names):
+        self.series_list_model.clear()
+
+        for name in names:
+            item = QStandardItem(name)
+            item.setCheckState(Qt.Unchecked)
+            item.setCheckable(True)
+            self.series_list_model.appendRow(item)   
      def create_main_frame(self):
         self.main_frame = QWidget()
 

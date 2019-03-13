@@ -75,9 +75,7 @@ class Sheet(QMainWindow):
         # Set up menu
         bar = self.menuBar()
         file = bar.addMenu('File')
-        button=QPushButton('Open Plotter',self)
-        button.move(20,350)
-        button.clicked.connect(self.run_myScript)
+       
         self.setWindowTitle("FOSSEE_2019")
         save_action = QAction('&Save', self)
         save_action.setShortcut('Ctrl+S')
@@ -94,9 +92,7 @@ class Sheet(QMainWindow):
         save_action.triggered.connect(self.form_widget.save_sheet)
         open_action.triggered.connect(self.form_widget.open_sheet)
         self.show()
-    def run_myScript(self):
-        call(["python", 'mpl_qtwidgets.py'])
-        QMainWindow.hide()
+  
     def quit_app(self):
         qApp.quit()
    
