@@ -1,9 +1,7 @@
 import sys
 import os
 import csv
-import mpl_qtwidgets
 from subprocess import call
-from mpl_qtwidgets import main
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QTableWidget, QApplication, QMainWindow, QTableWidgetItem, QFileDialog,QPushButton
 from PyQt5.QtWidgets import qApp, QAction
