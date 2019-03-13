@@ -1,7 +1,10 @@
 import sys
 import os
 import csv
-from PyQt5.QtWidgets import QTableWidget, QApplication, QMainWindow, QTableWidgetItem, QFileDialog
+import mpl_qtwidgets
+from mpl_qtwidgets import *
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QTableWidget, QApplication, QMainWindow, QTableWidgetItem, QFileDialog,QPushButton
 from PyQt5.QtWidgets import qApp, QAction
 
 
@@ -59,6 +62,7 @@ class MyTable(QTableWidget):
 
 
 class Sheet(QMainWindow):
+    
     def __init__(self):
         super().__init__()
 
@@ -69,9 +73,11 @@ class Sheet(QMainWindow):
 
         # Set up menu
         bar = self.menuBar()
-        self.setWindowTitle("FOSSEE_2019")
         file = bar.addMenu('File')
-
+        button=QPushButton('Open Plotter',self)
+        button.move(20,350)
+        button.clicked.connect(self.run_myScript)
+        self.setWindowTitle("FOSSEE_2019")
         save_action = QAction('&Save', self)
         save_action.setShortcut('Ctrl+S')
 
@@ -87,10 +93,26 @@ class Sheet(QMainWindow):
         save_action.triggered.connect(self.form_widget.save_sheet)
         open_action.triggered.connect(self.form_widget.open_sheet)
         self.show()
+    def openWindow(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui =Form()
+        self.ui.setupUi(self.window)
+        self.window.show()
 
     def quit_app(self):
         qApp.quit()
+    def run_myScript(self):
+        self.panel = mpl_qtwidgets.runscript()
+        self.panel.show()
+       
 
 app = QApplication(sys.argv)
+w = 900; h = 400
+#frm.sizeHint = lambda: QtCore.QSize (w, h)
 sheet = Sheet()
+win = QMainWindow ()
+win.setCentralWidget (sheet)
+win.resize(w, h)
+win.show ()
+
 sys.exit(app.exec_())
