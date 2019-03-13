@@ -2,7 +2,8 @@ import sys
 import os
 import csv
 import mpl_qtwidgets
-from mpl_qtwidgets import *
+from subprocess import call
+from mpl_qtwidgets import main
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QTableWidget, QApplication, QMainWindow, QTableWidgetItem, QFileDialog,QPushButton
 from PyQt5.QtWidgets import qApp, QAction
@@ -93,17 +94,12 @@ class Sheet(QMainWindow):
         save_action.triggered.connect(self.form_widget.save_sheet)
         open_action.triggered.connect(self.form_widget.open_sheet)
         self.show()
-    def openWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui =Form()
-        self.ui.setupUi(self.window)
-        self.window.show()
-
+    def run_myScript(self):
+        call(["python", 'mpl_qtwidgets.py'])
+        QMainWindow.hide()
     def quit_app(self):
         qApp.quit()
-    def run_myScript(self):
-        self.panel = mpl_qtwidgets.runscript()
-        self.panel.show()
+   
        
 
 app = QApplication(sys.argv)
